@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 const ObjectId = require('mongodb').ObjectId;
-// const admin = require("firebase-admin");
+const admin = require("firebase-admin");
 
 const app = express();
 
@@ -13,12 +13,12 @@ app.use(express.json());
 
 
 
-// //initialize firebase
-// const serviceAccount = require("./drive-and-drive-firebase-adminsdk.json");
+//initialize firebase
+const serviceAccount = require("./drive-and-drive-firebase-adminsdk.json");
 
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
 
 
 const port = process.env.PORT || 5000;
