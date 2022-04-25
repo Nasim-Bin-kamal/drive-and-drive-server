@@ -128,6 +128,18 @@ async function run() {
             res.json(result);
         });
 
+        //UPDATE API for update a product
+        app.put('/products/update/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedProduct = req.body;
+            // console.log(updatedProduct);
+            const filter = { _id: ObjectId(id) };
+            const updateDoc = { $set: updatedProduct }
+            const result = await productsCollection.updateOne(filter, updateDoc);
+            res.json(result);
+
+        });
+
         //POST API for reviews
         app.post('/reviews', async (req, res) => {
             const review = req.body;
