@@ -44,7 +44,7 @@ async function verifyToken(req, res, next) {
 async function run() {
   try {
     //delete await for vercel before client.connent()
-    await client.connect();
+    client.connect();
     const database = client.db("driveAndDriveDB");
     const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
