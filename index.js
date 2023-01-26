@@ -25,6 +25,7 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
+  connectTimeoutMS: 5000, // increase the timeout limit to 5 seconds
 });
 
 //token authorization function
@@ -44,7 +45,7 @@ async function verifyToken(req, res, next) {
 async function run() {
   try {
     //delete await for vercel before client.connent()
-    client.connect();
+    await client.connect();
     const database = client.db("driveAndDriveDB");
     const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
