@@ -55,7 +55,7 @@ app.use(function (req, res, next) {
 async function run() {
   try {
     //delete await for vercel before client.connent()
-    client.connect();
+    await client.connect();
     const database = client.db("driveAndDriveDB");
     const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
