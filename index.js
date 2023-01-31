@@ -18,7 +18,8 @@ app.use(express.json());
 
 //initialize firebase
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+const serviceAccount = require("./drive-and-drive-firebase-adminsdk-wvi6a-f805b34d3f.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
