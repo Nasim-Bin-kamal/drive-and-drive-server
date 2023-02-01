@@ -9,16 +9,10 @@ const app = express();
 
 //middleware
 app.use(cors());
-// app.use(
-//   cors({
-//     origin: "*",
-//   })
-// );
 app.use(express.json());
 
 //initialize firebase
 
-// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 const serviceAccount = require("./drive-and-drive-firebase-adminsdk-wvi6a-f805b34d3f.json");
 
 admin.initializeApp({
@@ -50,8 +44,7 @@ async function verifyToken(req, res, next) {
 
 async function run() {
   try {
-    //delete await for vercel before client.connent()
-    await client.connect();
+    // await client.connect();
     const database = client.db("driveAndDriveDB");
     const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
