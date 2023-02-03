@@ -12,7 +12,6 @@ app.use(cors());
 app.use(express.json());
 
 //initialize firebase
-
 const serviceAccount = require("./drive-and-drive-firebase-adminsdk-wvi6a-f805b34d3f.json");
 
 admin.initializeApp({
@@ -22,29 +21,34 @@ admin.initializeApp({
 const port = process.env.PORT || 5000;
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lzd4k.mongodb.net/?retryWrites=true&w=majority`;
+
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
+  connectTimeoutMS: 5000,
 });
 
 //token authorization function
-async function verifyToken(req, res, next) {
+const verifyToken = async (req, res, next) => {
   if (req.headers?.authorization?.startsWith("Bearer ")) {
     const token = req.headers?.authorization?.split(" ")[1];
 
     try {
       const decodedUser = await admin.auth().verifyIdToken(token);
       req.decodedEmail = decodedUser.email;
-    } catch {}
+    } catch {
+      if (user?.role !== "admin") {
+        return res.status(403).send({ message: "forbidden access" });
+      }
+    }
   }
 
   next();
-}
+};
 
 async function run() {
   try {
-    // await client.connect();
     const database = client.db("driveAndDriveDB");
     const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
@@ -219,7 +223,6 @@ async function run() {
       }
     });
   } finally {
-    // await client.close();
   }
 }
 
