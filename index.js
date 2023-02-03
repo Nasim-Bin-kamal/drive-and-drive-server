@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 //initialize firebase
-const serviceAccount = require("./drive-and-drive-firebase-adminsdk-wvi6a-f805b34d3f.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -21,12 +21,10 @@ admin.initializeApp({
 const port = process.env.PORT || 5000;
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lzd4k.mongodb.net/?retryWrites=true&w=majority`;
-
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
-  connectTimeoutMS: 5000,
 });
 
 //token authorization function
